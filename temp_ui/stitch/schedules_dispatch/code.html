@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Schedules &amp; Dispatch | India Post RTN Telematics</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-bright": "#343949",
+                        "on-primary": "#690002",
+                        "on-error": "#690005",
+                        "on-error-container": "#ffdad6",
+                        "outline": "#ac8883",
+                        "on-secondary-container": "#e6ecff",
+                        "inverse-on-surface": "#2b3040",
+                        "surface-container-highest": "#2f3445",
+                        "primary-fixed": "#ffdad5",
+                        "secondary-fixed": "#d8e2ff",
+                        "inverse-surface": "#dee1f7",
+                        "background": "#0e1322",
+                        "on-secondary-fixed": "#001a42",
+                        "tertiary": "#4edea3",
+                        "on-tertiary-fixed": "#002113",
+                        "surface-tint": "#ffb4a9",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "on-secondary": "#002e6a",
+                        "error": "#ffb4ab",
+                        "surface": "#0e1322",
+                        "primary": "#ffb4a9",
+                        "on-secondary-fixed-variant": "#004395",
+                        "tertiary-fixed": "#6ffbbe",
+                        "tertiary-container": "#00a572",
+                        "on-primary-fixed-variant": "#930005",
+                        "surface-container-high": "#25293a",
+                        "on-tertiary": "#003824",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "error-container": "#93000a",
+                        "inverse-primary": "#bd0f10",
+                        "on-primary-container": "#5c0002",
+                        "primary-fixed-dim": "#ffb4a9",
+                        "surface-variant": "#2f3445",
+                        "primary-container": "#ff5545",
+                        "on-background": "#dee1f7",
+                        "secondary-container": "#0566d9",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "secondary": "#adc6ff",
+                        "on-surface": "#dee1f7",
+                        "surface-container": "#1a1f2f",
+                        "on-surface-variant": "#e5bdb8",
+                        "surface-dim": "#0e1322",
+                        "on-tertiary-container": "#00311f",
+                        "surface-container-low": "#161b2b",
+                        "on-primary-fixed": "#410001",
+                        "surface-container-lowest": "#090e1c",
+                        "outline-variant": "#5c403c"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"],
+                        "technical": ["IBM Plex Mono"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(26, 31, 47, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            box-shadow: 0 0 20px rgba(255, 180, 169, 0.05);
+            border: 1px solid rgba(255, 180, 169, 0.2);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .nav-item-active {
+            background: rgba(230, 51, 41, 0.1);
+            color: #ffb4a9;
+            border-right: 4px solid #ff5545;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body min-h-screen">
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-[#0e1322]/80 backdrop-blur-xl flex justify-between items-center w-full px-6 py-3 border-b border-white/5">
+<div class="flex items-center gap-4">
+<span class="text-xl font-bold tracking-tighter text-[#E63329] uppercase font-headline">India Post RTN Telematics</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex items-center bg-surface-container-lowest rounded px-3 py-1.5 border border-white/5">
+<span class="material-symbols-outlined text-slate-400 text-sm mr-2">search</span>
+<input class="bg-transparent border-none text-xs focus:ring-0 text-slate-200 w-48 font-label" placeholder="Search Fleet..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center px-3 py-1 bg-primary-container/10 rounded">
+<div class="w-1.5 h-1.5 rounded-full bg-primary-container animate-pulse mr-2"></div>
+<span class="text-[10px] font-bold text-primary tracking-widest font-technical">LIVE</span>
+</div>
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:bg-white/5 p-1 rounded transition-all">notifications</span>
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:bg-white/5 p-1 rounded transition-all">settings</span>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-white/10">
+<img alt="Operator Profile" data-alt="Close up of professional logistics operator face" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUH_4mXHrl5wJRcCu6XljfnT-kRs8O7n9qntBCXCPuozAv0xmuYwFOLG9_Lmlt7i08rhbNSDtCLQy95QcEWpyheOplCXdjsfR1mTALBmzt9Kls6HaGCpLnWyAFfDNeUlVvk59hd9Ilbdp5JZqvxruSNPYZgjSq7PiAAYGz82IfFWJlxSFEy6KIMj7QdzrbR0Rm2LUJGh_MkYX6UGlOvgqqwpgxDgWuXk7s_4lty2J2ZKQskqtgeyPFJXRLR49XYgfrYE9rpxTX5WM"/>
+</div>
+</div>
+</div>
+</header>
+<!-- SideNavBar Shell -->
+<aside class="flex flex-col h-screen fixed left-0 top-0 pt-16 bg-[#0e1322] w-64 shadow-[4px_0_24px_rgba(0,0,0,0.5)] z-40 hidden md:flex">
+<div class="px-6 py-8">
+<h2 class="font-headline text-primary font-black text-lg tracking-tight">Command Center</h2>
+<p class="text-slate-500 text-[10px] uppercase tracking-[0.2em] font-medium">RTN Operations</p>
+</div>
+<nav class="flex-1 px-3 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-white/5 hover:text-slate-200 transition-all rounded font-medium text-sm" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="font-label">Live Map</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-white/5 hover:text-slate-200 transition-all rounded font-medium text-sm" href="#">
+<span class="material-symbols-outlined">local_shipping</span>
+<span class="font-label">Fleet Overview</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 nav-item-active transition-all rounded font-medium text-sm" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-label">Schedules</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-white/5 hover:text-slate-200 transition-all rounded font-medium text-sm" href="#">
+<span class="material-symbols-outlined">warning</span>
+<span class="font-label">Alerts</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-white/5 hover:text-slate-200 transition-all rounded font-medium text-sm" href="#">
+<span class="material-symbols-outlined">assessment</span>
+<span class="font-label">MIS Reports</span>
+</a>
+</nav>
+<div class="p-4 border-t border-white/5 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-white/5 transition-all rounded text-sm font-label" href="#">
+<span class="material-symbols-outlined text-lg">help</span>
+<span>Support</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-white/5 transition-all rounded text-sm font-label" href="#">
+<span class="material-symbols-outlined text-lg">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 pt-20 px-6 pb-12 min-h-screen">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+<div>
+<h1 class="text-4xl font-headline font-bold tracking-tight text-on-surface">Schedules &amp; Dispatch</h1>
+<p class="text-slate-400 mt-2 font-body max-w-xl">Monitor real-time regional transport network flow and dispatch new route assignments.</p>
+</div>
+<button class="flex items-center gap-2 bg-primary-container text-on-primary-container px-6 py-3 rounded font-bold hover:brightness-110 transition-all shadow-lg shadow-primary-container/20 uppercase tracking-wider text-sm">
+<span class="material-symbols-outlined text-xl">send_time_extension</span>
+                Dispatch New Run
+            </button>
+</div>
+<!-- Metrics Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+<div class="glass-card p-5 rounded-xl">
+<p class="text-[10px] text-slate-500 uppercase tracking-widest font-semibold mb-2">Total Scheduled</p>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-headline font-bold">1,284</span>
+<span class="text-tertiary text-xs font-technical">+12%</span>
+</div>
+</div>
+<div class="glass-card p-5 rounded-xl border-l-4 border-tertiary/50">
+<p class="text-[10px] text-slate-500 uppercase tracking-widest font-semibold mb-2">On-Time Dispatch</p>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-headline font-bold text-tertiary">94.2%</span>
+</div>
+</div>
+<div class="glass-card p-5 rounded-xl border-l-4 border-error-container/50">
+<p class="text-[10px] text-slate-500 uppercase tracking-widest font-semibold mb-2">Critical Delays</p>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-headline font-bold text-error">18</span>
+<span class="text-slate-500 text-xs font-label">Active now</span>
+</div>
+</div>
+<div class="glass-card p-5 rounded-xl">
+<p class="text-[10px] text-slate-500 uppercase tracking-widest font-semibold mb-2">Average Revised ETA</p>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-headline font-bold">+14m</span>
+</div>
+</div>
+</div>
+<!-- Table Controls -->
+<div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+<div class="flex gap-2">
+<button class="bg-surface-container-high px-4 py-2 rounded text-xs font-bold border border-white/5 hover:bg-white/10 transition-all">ALL RUNS</button>
+<button class="bg-surface px-4 py-2 rounded text-xs font-bold text-slate-400 border border-white/5 hover:bg-white/5 transition-all">IN TRANSIT</button>
+<button class="bg-surface px-4 py-2 rounded text-xs font-bold text-slate-400 border border-white/5 hover:bg-white/5 transition-all">PENDING</button>
+<button class="bg-surface px-4 py-2 rounded text-xs font-bold text-slate-400 border border-white/5 hover:bg-white/5 transition-all">COMPLETED</button>
+</div>
+<div class="flex gap-2">
+<div class="relative">
+<select class="bg-surface-container-low border-white/5 rounded text-xs py-2 pl-3 pr-8 focus:ring-primary focus:border-primary text-slate-300 appearance-none font-label">
+<option>Last 24 Hours</option>
+<option>Last 7 Days</option>
+<option>Last 30 Days</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1.5 text-slate-500 pointer-events-none text-lg">expand_more</span>
+</div>
+<button class="bg-surface-container-low p-2 rounded border border-white/5 text-slate-400 hover:text-white transition-all">
+<span class="material-symbols-outlined text-lg">filter_list</span>
+</button>
+</div>
+</div>
+<!-- Data Table Section -->
+<div class="glass-card rounded-xl overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high/50">
+<th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest font-label border-b border-white/5">Schedule ID</th>
+<th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest font-label border-b border-white/5">Vehicle</th>
+<th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest font-label border-b border-white/5">Route</th>
+<th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest font-label border-b border-white/5">Departure</th>
+<th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest font-label border-b border-white/5">Original ETA</th>
+<th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest font-label border-b border-white/5">Revised ETA</th>
+<th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest font-label border-b border-white/5">Status</th>
+<th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest font-label border-b border-white/5"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<!-- Row 1: Delayed -->
+<tr class="hover:bg-white/[0.02] transition-colors group">
+<td class="px-6 py-4 font-technical text-sm text-primary">RTN-9921-A</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-500">local_shipping</span>
+<div>
+<div class="text-sm font-technical font-medium">DL-01-RT-4421</div>
+<div class="text-[10px] text-slate-500 font-label">TATA 1613 • 12 Tons</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="text-sm font-label font-medium">DEL → MUM</div>
+<div class="text-[10px] text-slate-500">via NH48 Express</div>
+</td>
+<td class="px-6 py-4 text-sm font-technical text-slate-300">08:30 IST</td>
+<td class="px-6 py-4 text-sm font-technical text-slate-500 line-through">22:45 IST</td>
+<td class="px-6 py-4">
+<div class="text-sm font-technical text-[#EF4444] font-bold">23:55 IST</div>
+<div class="text-[10px] font-label text-[#EF4444]/70">+1h 10m</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded bg-[#EF4444]/10 text-[#EF4444] text-[10px] font-bold uppercase tracking-tighter">Delayed</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 hover:bg-white/10 rounded">
+<span class="material-symbols-outlined text-sm">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: On Time -->
+<tr class="hover:bg-white/[0.02] transition-colors group">
+<td class="px-6 py-4 font-technical text-sm text-primary">RTN-4429-B</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-500">local_shipping</span>
+<div>
+<div class="text-sm font-technical font-medium">MH-12-PX-8802</div>
+<div class="text-[10px] text-slate-500 font-label">EICHER 2012 • 9 Tons</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="text-sm font-label font-medium">BLR → HYD</div>
+<div class="text-[10px] text-slate-500">via Hebbal Corridor</div>
+</td>
+<td class="px-6 py-4 text-sm font-technical text-slate-300">10:15 IST</td>
+<td class="px-6 py-4 text-sm font-technical text-slate-300">19:30 IST</td>
+<td class="px-6 py-4 text-sm font-technical text-tertiary">19:25 IST</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded bg-[#10B981]/10 text-[#10B981] text-[10px] font-bold uppercase tracking-tighter">On Time</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 hover:bg-white/10 rounded">
+<span class="material-symbols-outlined text-sm">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: Alert/Warning -->
+<tr class="hover:bg-white/[0.02] transition-colors group">
+<td class="px-6 py-4 font-technical text-sm text-primary">RTN-7712-C</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-500">local_shipping</span>
+<div>
+<div class="text-sm font-technical font-medium">KA-05-AA-1109</div>
+<div class="text-[10px] text-slate-500 font-label">LEYLAND 2518 • 15 Tons</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="text-sm font-label font-medium">MAA → BLR</div>
+<div class="text-[10px] text-slate-500">via Vellore Route</div>
+</td>
+<td class="px-6 py-4 text-sm font-technical text-slate-300">11:45 IST</td>
+<td class="px-6 py-4 text-sm font-technical text-slate-500 line-through">17:00 IST</td>
+<td class="px-6 py-4">
+<div class="text-sm font-technical text-[#F59E0B] font-bold">17:15 IST</div>
+<div class="text-[10px] font-label text-[#F59E0B]/70">+15m</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded bg-[#F59E0B]/10 text-[#F59E0B] text-[10px] font-bold uppercase tracking-tighter">In Transit</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 hover:bg-white/10 rounded">
+<span class="material-symbols-outlined text-sm">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4: Pending -->
+<tr class="hover:bg-white/[0.02] transition-colors group">
+<td class="px-6 py-4 font-technical text-sm text-primary">RTN-1205-X</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-500">local_shipping</span>
+<div>
+<div class="text-sm font-technical font-medium">WB-23-CC-5521</div>
+<div class="text-[10px] text-slate-500 font-label">TATA LPT • 12 Tons</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="text-sm font-label font-medium">CCU → PAT</div>
+<div class="text-[10px] text-slate-500">via Durgapur Exp</div>
+</td>
+<td class="px-6 py-4 text-sm font-technical text-slate-500">14:00 IST</td>
+<td class="px-6 py-4 text-sm font-technical text-slate-300">02:00 IST</td>
+<td class="px-6 py-4 text-sm font-technical text-slate-500">TBD</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded bg-slate-500/10 text-slate-500 text-[10px] font-bold uppercase tracking-tighter">Pending</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 hover:bg-white/10 rounded">
+<span class="material-symbols-outlined text-sm">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 bg-surface-container-high/30 flex items-center justify-between border-t border-white/5">
+<span class="text-xs text-slate-500 font-label">Showing 4 of 28 active schedules</span>
+<div class="flex gap-2">
+<button class="p-1 rounded hover:bg-white/5 disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined text-lg">chevron_left</span>
+</button>
+<div class="flex gap-1">
+<button class="w-6 h-6 rounded bg-primary/20 text-primary text-[10px] font-bold flex items-center justify-center">1</button>
+<button class="w-6 h-6 rounded hover:bg-white/5 text-slate-400 text-[10px] font-bold flex items-center justify-center">2</button>
+<button class="w-6 h-6 rounded hover:bg-white/5 text-slate-400 text-[10px] font-bold flex items-center justify-center">3</button>
+</div>
+<button class="p-1 rounded hover:bg-white/5">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- System Intelligence / AI Routing Insights (Bento Extra) -->
+<div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="glass-card p-6 rounded-xl col-span-2">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-headline font-bold text-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary">insights</span>
+                        Network Efficiency Heatmap
+                    </h3>
+<span class="text-[10px] font-technical text-slate-500">REAL-TIME DATA STACK</span>
+</div>
+<div class="h-48 rounded bg-surface-container-low/50 relative overflow-hidden group">
+<img alt="Logistics route map data" class="w-full h-full object-cover opacity-20 grayscale group-hover:grayscale-0 transition-all duration-700" data-location="India Network Map" src="https://lh3.googleusercontent.com/aida-public/AB6AXuABhwpwguCFCSKFgL1iDaEx1324ouNJ-2vkITN9_IJJD0aX-jpJf4Xo6t1E7I2QplM8TPphgk_aioGwlesF24GcsEh_guV1aW6aaDzwhdEuRmLgzV-imaZoHMJX8x73DWpMLdIJjzVhQwqQ8nI-fn7CJ_PM2jR3mAEcWPDgXMzzLmGArEPVKWmyFCznSEdmOsfCokBRXVJU4vZmLxnCAPUJX6EcSRWnPanQxGQLbw0hl2PHSPQdhDyMjt8REDlJM7yMvlIg-Hfjjvc"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-transparent"></div>
+<!-- Mock Data Visualization Overlay -->
+<div class="absolute top-10 left-20 w-3 h-3 bg-error rounded-full animate-ping"></div>
+<div class="absolute bottom-12 right-40 w-2 h-2 bg-tertiary rounded-full shadow-[0_0_10px_#4edea3]"></div>
+<div class="absolute top-20 right-20 w-4 h-4 bg-tertiary/40 rounded-full blur-md"></div>
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<div class="bg-surface-container-highest/80 backdrop-blur px-4 py-2 rounded-lg border border-white/10 text-center">
+<p class="text-[10px] font-bold uppercase text-slate-400 mb-1">Optimal Path Found</p>
+<p class="text-sm font-technical font-bold text-tertiary">NH44 → SH12 | -22m Saving</p>
+</div>
+</div>
+</div>
+</div>
+<div class="glass-card p-6 rounded-xl">
+<h3 class="font-headline font-bold text-lg mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">emergency</span>
+                    Critical Alerts
+                </h3>
+<div class="space-y-4">
+<div class="flex gap-4 p-3 bg-[#EF4444]/5 rounded border-l-2 border-[#EF4444]">
+<span class="material-symbols-outlined text-[#EF4444] text-xl">ac_unit</span>
+<div>
+<p class="text-xs font-bold text-slate-200">Heavy Rain Alert (MH)</p>
+<p class="text-[10px] text-slate-500 mt-1">Expected delay +45m on Pune-Mumbai stretch.</p>
+</div>
+</div>
+<div class="flex gap-4 p-3 bg-[#F59E0B]/5 rounded border-l-2 border-[#F59E0B]">
+<span class="material-symbols-outlined text-[#F59E0B] text-xl">sensors_off</span>
+<div>
+<p class="text-xs font-bold text-slate-200">GPS Signal Intermittent</p>
+<p class="text-[10px] text-slate-500 mt-1">Vehicle KA-05-AA-1109 reporting low signal.</p>
+</div>
+</div>
+<button class="w-full py-2 text-center text-[10px] font-bold uppercase text-slate-400 hover:text-white transition-colors tracking-widest border border-white/5 rounded">View All System Alerts</button>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar for Mobile -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-[#0e1322] border-t border-white/5 flex justify-around items-center h-16 px-4 z-50">
+<a class="flex flex-col items-center gap-1 text-slate-500" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="text-[8px] uppercase font-bold">Map</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="text-[8px] uppercase font-bold">Schedules</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500" href="#">
+<span class="material-symbols-outlined">warning</span>
+<span class="text-[8px] uppercase font-bold">Alerts</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="text-[8px] uppercase font-bold">Profile</span>
+</a>
+</nav>
+</body></html>

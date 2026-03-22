@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>India Post RTN Telematics - MIS Reports</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-bright": "#343949",
+                        "on-primary": "#690002",
+                        "on-error": "#690005",
+                        "on-error-container": "#ffdad6",
+                        "outline": "#ac8883",
+                        "on-secondary-container": "#e6ecff",
+                        "inverse-on-surface": "#2b3040",
+                        "surface-container-highest": "#2f3445",
+                        "primary-fixed": "#ffdad5",
+                        "secondary-fixed": "#d8e2ff",
+                        "inverse-surface": "#dee1f7",
+                        "background": "#0e1322",
+                        "on-secondary-fixed": "#001a42",
+                        "tertiary": "#4edea3",
+                        "on-tertiary-fixed": "#002113",
+                        "surface-tint": "#ffb4a9",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "on-secondary": "#002e6a",
+                        "error": "#ffb4ab",
+                        "surface": "#0e1322",
+                        "primary": "#ffb4a9",
+                        "on-secondary-fixed-variant": "#004395",
+                        "tertiary-fixed": "#6ffbbe",
+                        "tertiary-container": "#00a572",
+                        "on-primary-fixed-variant": "#930005",
+                        "surface-container-high": "#25293a",
+                        "on-tertiary": "#003824",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "error-container": "#93000a",
+                        "inverse-primary": "#bd0f10",
+                        "on-primary-container": "#5c0002",
+                        "primary-fixed-dim": "#ffb4a9",
+                        "surface-variant": "#2f3445",
+                        "primary-container": "#ff5545",
+                        "on-background": "#dee1f7",
+                        "secondary-container": "#0566d9",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "secondary": "#adc6ff",
+                        "on-surface": "#dee1f7",
+                        "surface-container": "#1a1f2f",
+                        "on-surface-variant": "#e5bdb8",
+                        "surface-dim": "#0e1322",
+                        "on-tertiary-container": "#00311f",
+                        "surface-container-low": "#161b2b",
+                        "on-primary-fixed": "#410001",
+                        "surface-container-lowest": "#090e1c",
+                        "outline-variant": "#5c403c"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"],
+                        "technical": ["IBM Plex Mono"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(26, 31, 47, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            border-color: rgba(255, 180, 169, 0.2);
+            box-shadow: 0 0 20px rgba(255, 180, 169, 0.05);
+            transform: translateY(-2px);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #0e1322; }
+        ::-webkit-scrollbar-thumb { background: #2f3445; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body overflow-hidden">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-[#0e1322]/80 backdrop-blur-xl flex justify-between items-center w-full px-6 py-3 border-b border-white/5">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold tracking-tighter text-[#E63329] uppercase font-headline">India Post RTN Telematics</span>
+<nav class="hidden md:flex gap-6 items-center">
+<a class="text-slate-400 font-medium hover:bg-white/5 transition-all duration-300 px-3 py-1 rounded" href="#">Dashboard</a>
+<a class="text-[#E63329] font-bold border-b-2 border-[#E63329] px-3 py-1" href="#">MIS Reports</a>
+<a class="text-slate-400 font-medium hover:bg-white/5 transition-all duration-300 px-3 py-1 rounded" href="#">Analytics</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="bg-surface-container px-3 py-1.5 rounded flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="font-technical text-xs text-tertiary uppercase tracking-widest">LIVE</span>
+</div>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-white/5 rounded-full transition-all text-slate-400">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 hover:bg-white/5 rounded-full transition-all text-slate-400">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<div class="w-8 h-8 rounded bg-primary-container overflow-hidden">
+<img alt="Operator Profile" data-alt="User profile avatar of the logistics operator" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCx3cKomLqNamAglbFDINOzbVmwqOXnTtGOschJqTM3pxx_kECkhn3vsCGZ148lnhaoElfH0TYcs-AN9zh_37NvDS45pl1JqiuSV7S3mFJDubANWO8Wt673kb_ut_Tgak_aL6Q59TAE5XAUgshtdsCPKs5t2Yp62sqmYfaVBXEjlrVqE8yyCB68_YkLchn7V4-vi_-bqNLbaybv2K_P0BwWSw2h4Yzec6e5NVLb8_dSRj4BtQkfugdhjjIWNbXH0g4_bwV_AjZWFXU"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="flex flex-col h-screen fixed left-0 top-0 pt-16 bg-[#0e1322] w-64 shadow-[4px_0_24px_rgba(0,0,0,0.5)] z-40 border-r border-white/5">
+<div class="p-6">
+<h2 class="font-headline text-[#E63329] font-black text-lg tracking-tight">Command Center</h2>
+<p class="text-[10px] text-slate-500 uppercase tracking-[0.2em] font-medium">RTN Operations</p>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded text-slate-500 hover:text-slate-200 hover:bg-white/5 transition-all" href="#">
+<span class="material-symbols-outlined text-xl">map</span>
+<span class="font-label text-sm font-medium tracking-wide">Live Map</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded text-slate-500 hover:text-slate-200 hover:bg-white/5 transition-all" href="#">
+<span class="material-symbols-outlined text-xl">local_shipping</span>
+<span class="font-label text-sm font-medium tracking-wide">Fleet Overview</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded text-slate-500 hover:text-slate-200 hover:bg-white/5 transition-all" href="#">
+<span class="material-symbols-outlined text-xl">calendar_today</span>
+<span class="font-label text-sm font-medium tracking-wide">Schedules</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded text-slate-500 hover:text-slate-200 hover:bg-white/5 transition-all" href="#">
+<span class="material-symbols-outlined text-xl">warning</span>
+<span class="font-label text-sm font-medium tracking-wide">Alerts</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded bg-[#E63329]/10 text-[#E63329] border-r-4 border-[#E63329]" href="#">
+<span class="material-symbols-outlined text-xl">assessment</span>
+<span class="font-label text-sm font-medium tracking-wide">MIS Reports</span>
+</a>
+</nav>
+<div class="p-4 border-t border-white/5">
+<a class="flex items-center gap-3 px-4 py-3 rounded text-slate-500 hover:text-slate-200 transition-all" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label text-sm">Support</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded text-[#E63329] hover:bg-[#E63329]/5 transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label text-sm">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-20 p-8 h-screen overflow-y-auto bg-surface-container-lowest">
+<!-- Dashboard Header -->
+<div class="flex justify-between items-end mb-8">
+<div>
+<nav class="flex gap-2 text-[10px] text-slate-500 font-technical uppercase tracking-widest mb-1">
+<span>Operations</span>
+<span>/</span>
+<span class="text-slate-300">Management Information System</span>
+</nav>
+<h1 class="text-4xl font-headline font-bold tracking-tight">Executive Summary <span class="text-slate-600 font-light">Q3 2024</span></h1>
+</div>
+<div class="flex gap-4">
+<div class="flex bg-surface-container-high p-1 rounded">
+<button class="px-4 py-2 text-xs font-medium rounded bg-surface-container-highest text-white">Daily</button>
+<button class="px-4 py-2 text-xs font-medium rounded text-slate-400 hover:text-white transition-all">Weekly</button>
+<button class="px-4 py-2 text-xs font-medium rounded text-slate-400 hover:text-white transition-all">Monthly</button>
+</div>
+<button class="bg-primary-container text-white px-6 py-2 rounded-lg font-bold flex items-center gap-2 hover:opacity-90 transition-all shadow-[0_4px_14px_rgba(230,51,41,0.3)]">
+<span class="material-symbols-outlined text-sm">picture_as_pdf</span>
+<span>EXPORT TO PDF</span>
+</button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-6 pb-12">
+<!-- Key Metrics Bar -->
+<div class="col-span-12 grid grid-cols-4 gap-4">
+<div class="glass-card p-5 rounded-xl">
+<p class="text-[10px] font-technical text-slate-400 uppercase tracking-widest mb-2">Total Shipments</p>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-headline font-bold">124,590</span>
+<span class="text-tertiary text-xs font-technical">+12.4%</span>
+</div>
+</div>
+<div class="glass-card p-5 rounded-xl">
+<p class="text-[10px] font-technical text-slate-400 uppercase tracking-widest mb-2">System Uptime</p>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-headline font-bold">99.98%</span>
+<span class="text-tertiary text-xs font-technical">Optimal</span>
+</div>
+</div>
+<div class="glass-card p-5 rounded-xl">
+<p class="text-[10px] font-technical text-slate-400 uppercase tracking-widest mb-2">Active Fleet</p>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-headline font-bold">1,842</span>
+<span class="text-slate-400 text-xs font-technical">Vehicles</span>
+</div>
+</div>
+<div class="glass-card p-5 rounded-xl">
+<p class="text-[10px] font-technical text-slate-400 uppercase tracking-widest mb-2">Fuel Efficiency</p>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-headline font-bold">14.2</span>
+<span class="text-error text-xs font-technical">-2.1%</span>
+</div>
+</div>
+</div>
+<!-- Chart Section 1: On-Time Performance (Line Chart) -->
+<div class="col-span-8 glass-card p-6 rounded-xl flex flex-col">
+<div class="flex justify-between items-center mb-8">
+<div>
+<h3 class="font-headline font-semibold text-lg">On-Time Performance</h3>
+<p class="text-xs text-slate-500 font-label">7-Day operational variance analysis</p>
+</div>
+<div class="flex items-center gap-4 font-technical text-[10px]">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span>ACTUAL</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-white/20"></span>
+<span>TARGET (95%)</span>
+</div>
+</div>
+</div>
+<div class="flex-1 flex items-end gap-1 min-h-[250px] px-2 relative">
+<!-- Target Line Overlay -->
+<div class="absolute top-[20%] left-0 right-0 h-px bg-white/10 border-t border-dashed border-white/20 z-0"></div>
+<!-- Line Chart Visual Representation -->
+<div class="flex-1 h-full flex flex-col justify-end group">
+<div class="bg-primary/20 hover:bg-primary/30 w-full rounded-t transition-all flex flex-col justify-end items-center" style="height: 82%;">
+<div class="w-full h-1 bg-primary mb-[-2px]"></div>
+</div>
+<p class="text-[10px] font-technical text-slate-500 mt-3 text-center">MON</p>
+</div>
+<div class="flex-1 h-full flex flex-col justify-end group">
+<div class="bg-primary/20 hover:bg-primary/30 w-full rounded-t transition-all flex flex-col justify-end items-center" style="height: 78%;">
+<div class="w-full h-1 bg-primary mb-[-2px]"></div>
+</div>
+<p class="text-[10px] font-technical text-slate-500 mt-3 text-center">TUE</p>
+</div>
+<div class="flex-1 h-full flex flex-col justify-end group">
+<div class="bg-primary/20 hover:bg-primary/30 w-full rounded-t transition-all flex flex-col justify-end items-center" style="height: 88%;">
+<div class="w-full h-1 bg-primary mb-[-2px]"></div>
+</div>
+<p class="text-[10px] font-technical text-slate-500 mt-3 text-center">WED</p>
+</div>
+<div class="flex-1 h-full flex flex-col justify-end group">
+<div class="bg-primary/20 hover:bg-primary/30 w-full rounded-t transition-all flex flex-col justify-end items-center" style="height: 94%;">
+<div class="w-full h-1 bg-primary mb-[-2px]"></div>
+</div>
+<p class="text-[10px] font-technical text-slate-500 mt-3 text-center">THU</p>
+</div>
+<div class="flex-1 h-full flex flex-col justify-end group">
+<div class="bg-primary/20 hover:bg-primary/30 w-full rounded-t transition-all flex flex-col justify-end items-center" style="height: 80%;">
+<div class="w-full h-1 bg-primary mb-[-2px]"></div>
+</div>
+<p class="text-[10px] font-technical text-slate-500 mt-3 text-center">FRI</p>
+</div>
+<div class="flex-1 h-full flex flex-col justify-end group">
+<div class="bg-primary/20 hover:bg-primary/30 w-full rounded-t transition-all flex flex-col justify-end items-center" style="height: 65%;">
+<div class="w-full h-1 bg-primary mb-[-2px]"></div>
+</div>
+<p class="text-[10px] font-technical text-slate-500 mt-3 text-center">SAT</p>
+</div>
+<div class="flex-1 h-full flex flex-col justify-end group">
+<div class="bg-primary/20 hover:bg-primary/30 w-full rounded-t transition-all flex flex-col justify-end items-center" style="height: 84%;">
+<div class="w-full h-1 bg-primary mb-[-2px]"></div>
+</div>
+<p class="text-[10px] font-technical text-slate-500 mt-3 text-center">SUN</p>
+</div>
+</div>
+</div>
+<!-- Chart Section 2: Alert Breakdown (Donut Chart) -->
+<div class="col-span-4 glass-card p-6 rounded-xl">
+<h3 class="font-headline font-semibold text-lg mb-6">Alert Breakdown</h3>
+<div class="relative w-48 h-48 mx-auto mb-6 flex items-center justify-center">
+<!-- SVG Donut Representation -->
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<circle cx="50" cy="50" fill="transparent" r="40" stroke="rgba(255,255,255,0.05)" stroke-width="12"></circle>
+<!-- Error Section (Red) -->
+<circle class="transition-all duration-1000" cx="50" cy="50" fill="transparent" r="40" stroke="#ff5545" stroke-dasharray="251.2" stroke-dashoffset="180" stroke-width="12"></circle>
+<!-- Warning Section (Amber) -->
+<circle class="transition-all duration-1000" cx="50" cy="50" fill="transparent" r="40" stroke="#F59E0B" stroke-dasharray="251.2" stroke-dashoffset="220" stroke-width="12"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-3xl font-headline font-bold">412</span>
+<span class="text-[10px] font-technical text-slate-500 uppercase">Critical</span>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-center text-xs font-label">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-primary-container"></span>
+<span class="text-slate-300">Route Deviations</span>
+</div>
+<span class="font-technical text-white">45%</span>
+</div>
+<div class="flex justify-between items-center text-xs font-label">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-[#F59E0B]"></span>
+<span class="text-slate-300">Idle Time Violation</span>
+</div>
+<span class="font-technical text-white">22%</span>
+</div>
+<div class="flex justify-between items-center text-xs font-label">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-surface-container-highest"></span>
+<span class="text-slate-300">Harsh Braking</span>
+</div>
+<span class="font-technical text-white">33%</span>
+</div>
+</div>
+</div>
+<!-- Chart Section 3: Capacity Utilization (Horizontal Bar Chart) -->
+<div class="col-span-12 glass-card p-6 rounded-xl">
+<div class="flex justify-between items-center mb-6">
+<div>
+<h3 class="font-headline font-semibold text-lg">Capacity Utilization by Route</h3>
+<p class="text-xs text-slate-500 font-label">Load factor vs theoretical capacity</p>
+</div>
+<button class="text-xs font-technical text-primary hover:underline">VIEW FULL LOGS</button>
+</div>
+<div class="space-y-6">
+<div class="space-y-2">
+<div class="flex justify-between font-technical text-[10px] text-slate-400 uppercase tracking-tighter">
+<span>RTN-DEL-MUM-01 (Delhi → Mumbai Express)</span>
+<span class="text-white">94.2%</span>
+</div>
+<div class="h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-tertiary rounded-full shadow-[0_0_8px_rgba(78,222,163,0.3)]" style="width: 94.2%"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between font-technical text-[10px] text-slate-400 uppercase tracking-tighter">
+<span>RTN-BLR-CHN-04 (Bangalore → Chennai Corridor)</span>
+<span class="text-white">88.5%</span>
+</div>
+<div class="h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-tertiary rounded-full shadow-[0_0_8px_rgba(78,222,163,0.3)]" style="width: 88.5%"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between font-technical text-[10px] text-slate-400 uppercase tracking-tighter">
+<span>RTN-KOL-GWA-02 (Kolkata → Guwahati Hub)</span>
+<span class="text-white">62.1%</span>
+</div>
+<div class="h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container rounded-full shadow-[0_0_8px_rgba(255,85,69,0.3)]" style="width: 62.1%"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between font-technical text-[10px] text-slate-400 uppercase tracking-tighter">
+<span>RTN-HYD-PUN-09 (Hyderabad → Pune Regional)</span>
+<span class="text-white">76.8%</span>
+</div>
+<div class="h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary-container rounded-full shadow-[0_0_8px_rgba(5,102,217,0.3)]" style="width: 76.8%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Data Anomalies -->
+<div class="col-span-12 glass-card rounded-xl overflow-hidden">
+<div class="p-6 border-b border-white/5 flex justify-between items-center">
+<h3 class="font-headline font-semibold text-lg">Operational Anomalies</h3>
+<div class="flex gap-2">
+<span class="bg-error-container text-white px-3 py-1 rounded-full text-[10px] font-technical uppercase">3 High Priority</span>
+</div>
+</div>
+<div class="w-full">
+<table class="w-full text-left font-label">
+<thead class="bg-surface-container-high text-[10px] uppercase font-technical text-slate-400 tracking-wider">
+<tr>
+<th class="px-6 py-4 font-medium">Vehicle ID</th>
+<th class="px-6 py-4 font-medium">Route Segment</th>
+<th class="px-6 py-4 font-medium">Metric Deviation</th>
+<th class="px-6 py-4 font-medium">Timestamp</th>
+<th class="px-6 py-4 font-medium">Risk Score</th>
+<th class="px-6 py-4 font-medium">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5 font-technical text-xs">
+<tr class="hover:bg-white/5 transition-all">
+<td class="px-6 py-4 font-bold text-white">HR-38-AS-9214</td>
+<td class="px-6 py-4 text-slate-400">Jaipur → Delhi Hub</td>
+<td class="px-6 py-4 text-error">+42m Delayed</td>
+<td class="px-6 py-4 text-slate-500">2024-10-24 14:22</td>
+<td class="px-6 py-4">
+<div class="flex gap-0.5">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<div class="w-2 h-2 rounded-full bg-white/10"></div>
+</div>
+</td>
+<td class="px-6 py-4">
+<button class="text-primary hover:text-white transition-all">Investigate</button>
+</td>
+</tr>
+<tr class="hover:bg-white/5 transition-all">
+<td class="px-6 py-4 font-bold text-white">MH-12-RT-0082</td>
+<td class="px-6 py-4 text-slate-400">Pune → Surat Link</td>
+<td class="px-6 py-4 text-primary">Geo-fence Exit</td>
+<td class="px-6 py-4 text-slate-500">2024-10-24 13:58</td>
+<td class="px-6 py-4">
+<div class="flex gap-0.5">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<div class="w-2 h-2 rounded-full bg-white/10"></div>
+<div class="w-2 h-2 rounded-full bg-white/10"></div>
+</div>
+</td>
+<td class="px-6 py-4">
+<button class="text-primary hover:text-white transition-all">Investigate</button>
+</td>
+</tr>
+<tr class="hover:bg-white/5 transition-all">
+<td class="px-6 py-4 font-bold text-white">UP-16-BD-1192</td>
+<td class="px-6 py-4 text-slate-400">Noida → Agra Corridor</td>
+<td class="px-6 py-4 text-[#F59E0B]">Fuel Siphon Alert</td>
+<td class="px-6 py-4 text-slate-500">2024-10-24 13:45</td>
+<td class="px-6 py-4">
+<div class="flex gap-0.5">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<div class="w-2 h-2 rounded-full bg-error"></div>
+</div>
+</td>
+<td class="px-6 py-4">
+<button class="text-primary hover:text-white transition-all">Investigate</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</body></html>
