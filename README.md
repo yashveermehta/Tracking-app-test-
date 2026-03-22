@@ -114,5 +114,7 @@ npm run deploy
 ---
 
 <div align="center">
-  <i>Developed for operational simulation and strategic supply-chain analysis.</i>
+
+Simulation data generated locally · Dashboard powered by React & Vite
+
 </div>
