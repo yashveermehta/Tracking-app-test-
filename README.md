@@ -6,6 +6,8 @@
   [![Vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)]()
   [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)]()
   [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)]()
+
+  <h3><a href="https://yashveermehta.github.io/Tracking-app-test-/">🚀 View Live Dashboard</a></h3>
 </div>
 
 <br />
