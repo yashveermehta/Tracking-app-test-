@@ -20,7 +20,6 @@ export const Fleet = () => {
     const onTimePct = Math.round((trucks.filter(t => t.status === 'ON_TIME').length / (activeTrucks || 1)) * 100);
 
     const exportCSV = () => {
-      // console.log("exporting to csv now");
       let csv = 'Registration,Route,Capacity(T),Load(T),Utilization%,Status,Speed(kmh),DelayMinutes,LastUpdated\n';
       trucks.forEach(t => {
           const rName = routes.find(r => r.id === t.routeId)?.name || 'Unknown';
@@ -226,7 +225,6 @@ export const Schedules = () => {
 
     const availableTrucks = trucks.filter(t => t.status !== 'MAINTENANCE');
 
-    // basic metrics for top cards
     const totalScheduled = schedules.length;
     const activeDelays = schedules.filter(s => {
         const t = trucks.find(tr => tr.id === s.truckId);
@@ -238,7 +236,6 @@ export const Schedules = () => {
         if (!selectedTruck || !selectedRoute || !departureTime) return;
 
         const date = new Date(departureTime);
-        // let's just mock ETA as +10 hrs for now
         const newSchedule = {
             id: `sched-${Date.now()}`,
             truckId: selectedTruck,
@@ -372,7 +369,6 @@ export const Schedules = () => {
                                             {format(sched.estimatedArrivalTime, 'HH:mm dd/MM')}
                                         </td>
                                         <td className="px-6 py-5">
-                                            {/* revised calc based on delay logic */}
                                             <div className={`text-sm font-technical font-bold ${isDelayed ? 'text-[#E63329]' : 'text-tertiary'}`}>
                                                 {format(new Date(sched.estimatedArrivalTime.getTime() + ((truck?.delayMinutes || 0) * 60000)), 'HH:mm dd/MM')}
                                             </div>

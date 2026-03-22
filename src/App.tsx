@@ -7,7 +7,6 @@ import { SimulationService } from './services/SimulationService';
 function App() {
   return (
     <BrowserRouter>
-      {/* Simulation Engine running in background */}
       <SimulationService />
       <Routes>
         <Route path="/" element={<Layout />}>

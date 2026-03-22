@@ -6,7 +6,6 @@ import { useStore } from '../../store';
 import { formatCapacityPercentage } from '../../lib/utils';
 import { Route as TelematicsRoute, Truck } from '../../types';
 
-// Fix Leaflet Default Icon issue in React
 import iconMarker2x from 'leaflet/dist/images/marker-icon-2x.png';
 import iconMarkerLoc from 'leaflet/dist/images/marker-icon.png';
 import iconMarkerShadow from 'leaflet/dist/images/marker-shadow.png';
@@ -18,7 +17,6 @@ L.Icon.Default.mergeOptions({
   shadowUrl: iconMarkerShadow,
 });
 
-// Create custom truck icons
 const createTruckIcon = (status: Truck['status'], loadPct: number) => {
   const color = status === 'DELAYED' ? '#E93333' : status === 'MAINTENANCE' ? '#F59E0B' : '#10B981';
   const html = `
@@ -54,7 +52,6 @@ export const TelematicsMap = ({ filterRouteId, onTruckSelect }: TelematicsMapPro
 
   const activeTrucks = filterRouteId ? trucks.filter(t => t.routeId === filterRouteId) : trucks;
 
-  // India Center coordinates as default View
   const center: [number, number] = [22.9734, 78.6569]; 
   const zoom = 5;
 
@@ -66,23 +63,20 @@ export const TelematicsMap = ({ filterRouteId, onTruckSelect }: TelematicsMapPro
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {/* Draw Routes & Nodes */}
         {routes.map((route: TelematicsRoute) => (
           <React.Fragment key={route.id}>
-            {/* Draw The Polyline */}
             <Polyline 
               positions={route.path} 
               pathOptions={{ color: '#4F46E5', weight: 4, opacity: 0.6 }} 
             />
             
-            {/* Draw The Waypoints / Post Offices */}
             {route.waypoints.map(wp => (
               <React.Fragment key={wp.id}>
                 {wp.isTouchPoint && (
                   <Circle 
                     center={[wp.location.lat, wp.location.lng]} 
                     pathOptions={{ color: '#E93333', fillColor: '#E93333', fillOpacity: 0.4 }} 
-                    radius={3000} // Setup Geofence visually (3km radius)
+                    radius={3000}
                   >
                     <Popup>
                       <div className="font-semibold">{wp.location.name}</div>
@@ -99,7 +93,6 @@ export const TelematicsMap = ({ filterRouteId, onTruckSelect }: TelematicsMapPro
           </React.Fragment>
         ))}
 
-        {/* Draw Active Trucks */}
         {activeTrucks.map(truck => {
           const loadPct = formatCapacityPercentage(truck.currentLoad, truck.capacity);
           return (
@@ -111,7 +104,6 @@ export const TelematicsMap = ({ filterRouteId, onTruckSelect }: TelematicsMapPro
                 click: () => onTruckSelect?.(truck.id),
               }}
             >
-              {/* Optional: keep popup for basic hover, but since we implement side panel, we can disable popup or keep it. Let's remove popup entirely per instructions "not a popup" or just keep it minimal. Removing for cleaner UX. */}
             </Marker>
           );
         })}

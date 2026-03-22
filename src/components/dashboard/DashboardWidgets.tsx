@@ -15,7 +15,6 @@ export const AnalyticsHeroCards = () => {
   const totalLoad = trucks.reduce((acc, t) => acc + t.currentLoad, 0);
   const networkUtilization = formatCapacityPercentage(totalLoad, totalCapacity);
   
-  // Calculate percentages for the subtext
   const onTimePct = Math.round((onTimeTrucksCount / (trucks.length || 1)) * 100);
 
   return (
@@ -76,7 +75,7 @@ export const AnalyticsHeroCards = () => {
 export const LiveAlertsFeed = () => {
    const { alerts, resolveAlert } = useStore();
    const activeAlerts = alerts.filter(a => !a.resolved);
-   const recentAlerts = activeAlerts.slice(0, 5); // Show latest 5 unresolves
+   const recentAlerts = activeAlerts.slice(0, 5);
 
    return (
      <div className="glass-card rounded-lg flex flex-col overflow-hidden h-full">
@@ -115,7 +114,6 @@ export const LiveAlertsFeed = () => {
                    <span className="material-symbols-outlined text-xs group-hover:translate-x-1 transition-transform" style={{ color: colorHex }}>arrow_forward_ios</span>
                  </div>
                  
-                 {/* Hover tooltip hint */}
                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-[#0e1322]/80 backdrop-blur-sm rounded z-10">
                     <span className="text-xs font-bold text-white uppercase tracking-widest border border-white/20 px-4 py-1 rounded">Click to Resolve</span>
                  </div>

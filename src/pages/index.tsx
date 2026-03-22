@@ -16,19 +16,12 @@ const LiveMap = () => {
   const selectedTruck = trucks.find(t => t.id === selectedTruckId);
   const selectedTruckRoute = selectedTruck ? routes.find(r => r.id === selectedTruck.routeId) : null;
   
-  // get last 3 events for whatever truck is clicked
   const recentEvents = touchPoints.filter(e => e.truckId === selectedTruckId).slice(0, 3);
-
-  // useEffect(() => {
-  //   console.log("filter state changed to", filterRouteId)
-  // }, [filterRouteId])
 
   return (
     <>
-      {/* Top KPI Cards */}
       <AnalyticsHeroCards />
 
-      {/* Route Filter Dropdown */}
       <div className="mb-4 flex justify-between items-center">
         <div className="relative">
            <select 
@@ -45,14 +38,10 @@ const LiveMap = () => {
         </div>
       </div>
 
-      {/* Dashboard Layout */}
       <div className="flex-1 flex flex-col lg:flex-row gap-6 min-h-[600px] lg:h-[calc(100vh-14rem)] mb-16 md:mb-0">
-        
-        {/* Map Area */}
         <div className="flex-[2] glass-card rounded-lg relative overflow-hidden bg-surface-container-lowest h-[400px] lg:h-full">
           <TelematicsMap filterRouteId={filterRouteId} onTruckSelect={setSelectedTruckId} />
           
-          {/* Map Legend */}
           <div className="absolute bottom-6 left-6 p-4 glass-card rounded-lg flex flex-col gap-3 z-20 pointer-events-none">
             <p className="text-[10px] font-label text-slate-500 uppercase tracking-widest mb-1">Fleet Legend</p>
             <div className="flex items-center gap-3">
@@ -69,14 +58,12 @@ const LiveMap = () => {
             </div>
           </div>
 
-          {/* Region Focus Badge */}
           <div className="absolute top-6 left-6 flex flex-col gap-1 z-20 pointer-events-none">
             <div className="bg-[#E63329]/90 text-white px-3 py-1 rounded-sm text-[10px] font-bold uppercase tracking-tighter w-fit">NATIONAL OVERVIEW</div>
             <div className="glass-card px-3 py-1 text-[11px] font-technical text-slate-300 w-fit backdrop-blur-md">LAT: 20.5937° N | LON: 78.9629° E</div>
           </div>
         </div>
         
-        {/* Alert Panel (1/3) */}
         <div className="flex-1 h-[400px] lg:h-full relative transition-all duration-300">
           {!selectedTruckId ? (
             <LiveAlertsFeed />

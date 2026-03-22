@@ -14,7 +14,6 @@ const navigation = [
 const Sidebar = ({ isOpen, toggleSidebar }: { isOpen: boolean; toggleSidebar: () => void }) => {
   return (
     <>
-      {/* Mobile overlay */}
       {isOpen && (
         <div 
           className="fixed inset-0 bg-black/50 z-30 lg:hidden"
@@ -22,7 +21,6 @@ const Sidebar = ({ isOpen, toggleSidebar }: { isOpen: boolean; toggleSidebar: ()
         />
       )}
 
-      {/* Sidebar */}
       <aside 
         className={`flex flex-col h-screen fixed left-0 top-0 pt-16 bg-[#0e1322] w-64 shadow-[4px_0_24px_rgba(0,0,0,0.5)] z-40 transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
@@ -183,7 +181,6 @@ export const Layout = () => {
         <Outlet />
       </main>
 
-      {/* Bottom Nav for Mobile */}
       <nav className="md:hidden fixed bottom-1 left-0 right-0 glass-card mx-2 rounded-xl z-50 px-6 py-2 flex justify-around items-center">
         {navigation.slice(0, 5).map((item) => (
           <NavLink
