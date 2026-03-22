@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from './components/layout/Layout';
 import { LiveMap, Reports } from './pages';
 import { Fleet, Schedules, Alerts, Settings } from './pages/Features';
@@ -6,7 +6,7 @@ import { SimulationService } from './services/SimulationService';
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <SimulationService />
       <Routes>
         <Route path="/" element={<Layout />}>
@@ -19,7 +19,7 @@ function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
