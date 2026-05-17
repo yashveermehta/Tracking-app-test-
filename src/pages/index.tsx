@@ -6,22 +6,52 @@ import { useStore } from '../store';
 import { formatDistanceToNow } from 'date-fns';
 
 const LiveMap = () => {
+  // State to store user selections (which route or truck is currently selected)
   const [filterRouteId, setFilterRouteId] = useState<string>('');
   const [selectedTruckId, setSelectedTruckId] = useState<string | null>(null);
   
+  // Get data from our global state store
   const routes = useStore(state => state.routes);
   const trucks = useStore(state => state.trucks);
   const touchPoints = useStore(state => state.touchPointEvents);
   
+  // Find the details of the currently selected truck
   const selectedTruck = trucks.find(t => t.id === selectedTruckId);
+  // Find the route details for the selected truck
   const selectedTruckRoute = selectedTruck ? routes.find(r => r.id === selectedTruck.routeId) : null;
   
+  // Get only the most recent 3 events for the selected truck
   const recentEvents = touchPoints.filter(e => e.truckId === selectedTruckId).slice(0, 3);
+
+  // Helper function to get the status background color
+  const getStatusStyle = (status: string) => {
+    if (status === 'DELAYED') {
+      return 'bg-error/10 text-error';
+    } else if (status === 'MAINTENANCE') {
+      return 'bg-[#F59E0B]/10 text-[#F59E0B]'; // Orange for maintenance
+    } else {
+      return 'bg-tertiary/10 text-tertiary'; // Green for normal/on-time
+    }
+  };
+
+  // Helper function to get capacity color
+  const getCapacityColor = (currentLoad: number, capacity: number) => {
+    let pct = Math.round((currentLoad / capacity) * 100);
+    if (pct >= 90) {
+      return '#E63329'; // Red if almost full
+    } else if (pct >= 70) {
+      return '#F59E0B'; // Orange if moderately full
+    } else {
+      return '#00a572'; // Green if mostly empty
+    }
+  };
 
   return (
     <>
+      {/* Top dashboard summary cards */}
       <AnalyticsHeroCards />
 
+      {/* Filter Dropdown Section */}
       <div className="mb-4 flex justify-between items-center">
         <div className="relative">
            <select 
@@ -38,10 +68,14 @@ const LiveMap = () => {
         </div>
       </div>
 
+      {/* Main Map and Details Section */}
       <div className="flex-1 flex flex-col lg:flex-row gap-6 min-h-[600px] lg:h-[calc(100vh-14rem)] mb-16 md:mb-0">
+        
+        {/* Left Side: The Map Component */}
         <div className="flex-[2] glass-card rounded-lg relative overflow-hidden bg-surface-container-lowest h-[400px] lg:h-full">
           <TelematicsMap filterRouteId={filterRouteId} onTruckSelect={setSelectedTruckId} />
           
+          {/* Map Legend (Bottom Left) */}
           <div className="absolute bottom-6 left-6 p-4 glass-card rounded-lg flex flex-col gap-3 z-20 pointer-events-none">
             <p className="text-[10px] font-label text-slate-500 uppercase tracking-widest mb-1">Fleet Legend</p>
             <div className="flex items-center gap-3">
@@ -58,22 +92,28 @@ const LiveMap = () => {
             </div>
           </div>
 
+          {/* Map Title Overlay (Top Left) */}
           <div className="absolute top-6 left-6 flex flex-col gap-1 z-20 pointer-events-none">
             <div className="bg-[#E63329]/90 text-white px-3 py-1 rounded-sm text-[10px] font-bold uppercase tracking-tighter w-fit">NATIONAL OVERVIEW</div>
             <div className="glass-card px-3 py-1 text-[11px] font-technical text-slate-300 w-fit backdrop-blur-md">LAT: 20.5937° N | LON: 78.9629° E</div>
           </div>
         </div>
         
+        {/* Right Side: Truck Details or Alerts Feed */}
         <div className="flex-1 h-[400px] lg:h-full relative transition-all duration-300">
+          
+          {/* Show Alerts if no truck is selected, otherwise show Truck Details */}
           {!selectedTruckId ? (
             <LiveAlertsFeed />
           ) : (
             selectedTruck && (
               <div className="absolute inset-0 z-30 glass-card bg-surface-container-lowest dark border border-white/10 rounded-xl overflow-y-auto w-full max-w-[400px] lg:max-w-none shadow-2xl animate-fade-in-down flex flex-col">
+                 
+                 {/* Truck Details Header */}
                  <div className="p-5 border-b border-white/5 flex justify-between items-center bg-surface-container-low/50 sticky top-0 z-10">
                     <div>
                       <h3 className="text-xl font-headline font-bold text-on-surface">{selectedTruck.registrationNumber}</h3>
-                      <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded mt-1 inline-block ${selectedTruck.status === 'DELAYED' ? 'bg-error/10 text-error' : selectedTruck.status === 'MAINTENANCE' ? 'bg-[#F59E0B]/10 text-[#F59E0B]' : 'bg-tertiary/10 text-tertiary'}`}>
+                      <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded mt-1 inline-block ${getStatusStyle(selectedTruck.status)}`}>
                         {selectedTruck.status.replace('_', ' ')}
                       </span>
                     </div>
@@ -82,7 +122,10 @@ const LiveMap = () => {
                     </button>
                  </div>
                  
+                 {/* Truck Details Body */}
                  <div className="p-5 space-y-6 flex-1">
+                    
+                    {/* Current Status Section */}
                     <section>
                       <h4 className="text-[10px] font-technical uppercase tracking-widest text-slate-500 mb-3 border-b border-white/5 pb-1">Current Status</h4>
                       <div className="grid grid-cols-2 gap-4">
@@ -107,18 +150,20 @@ const LiveMap = () => {
                       </div>
                     </section>
 
+                    {/* Capacity Ring Chart Section */}
                     <section className="bg-surface-container-low/20 p-4 rounded-xl border border-white/5 text-center flex flex-col items-center">
                       <h4 className="text-[10px] font-technical uppercase tracking-widest text-slate-500 mb-4 w-full text-left">Capacity</h4>
                       <div className="relative w-32 h-32 flex items-center justify-center">
                         <div className="absolute inset-0 rounded-full border-[8px] border-surface-container-highest"></div>
+                        {/* Dynamic Ring Color based on capacity */}
                         {(() => {
                           const pct = Math.round((selectedTruck.currentLoad / selectedTruck.capacity) * 100);
-                          const color = pct >= 90 ? '#E63329' : pct >= 70 ? '#F59E0B' : '#00a572';
+                          const ringColor = getCapacityColor(selectedTruck.currentLoad, selectedTruck.capacity);
                           return (
                             <div 
                               className="absolute inset-0 rounded-full"
                               style={{
-                                background: `conic-gradient(${color} ${pct}%, transparent ${pct}%)`,
+                                background: `conic-gradient(${ringColor} ${pct}%, transparent ${pct}%)`,
                                 WebkitMask: 'radial-gradient(transparent 55%, black 56%)',
                                 mask: 'radial-gradient(transparent 55%, black 56%)'
                               }}
@@ -132,9 +177,12 @@ const LiveMap = () => {
                       <p className="text-sm font-technical text-slate-300 mt-3">{selectedTruck.currentLoad.toFixed(2)} / {selectedTruck.capacity} Tonnes</p>
                     </section>
 
+                    {/* Route Info Section */}
                     <section>
                       <h4 className="text-[10px] font-technical uppercase tracking-widest text-slate-500 mb-3 border-b border-white/5 pb-1">Route Info</h4>
                       <p className="text-xs font-body text-slate-300 mb-3">{selectedTruckRoute?.name || 'Unknown Route'}</p>
+                      
+                      {/* Waypoints Timeline */}
                       <div className="space-y-3 relative before:absolute before:inset-y-2 before:left-[5px] before:w-[2px] before:bg-surface-container-highest">
                         {selectedTruckRoute?.waypoints.map((wp) => {
                           const isNext = wp.id === selectedTruck.nextWaypointId;
@@ -151,6 +199,7 @@ const LiveMap = () => {
                       </div>
                     </section>
 
+                    {/* Recent Events Section */}
                     {recentEvents.length > 0 && (
                       <section>
                         <h4 className="text-[10px] font-technical uppercase tracking-widest text-slate-500 mb-3 border-b border-white/5 pb-1">Recent Events</h4>
@@ -181,3 +230,4 @@ const LiveMap = () => {
 };
 
 export { LiveMap, Reports };
+
